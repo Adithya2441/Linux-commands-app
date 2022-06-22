@@ -1,3 +1,4 @@
+from celery.result import AsyncResult
 import time,subprocess
 from .tasks import celery_run
 from django.shortcuts import render
@@ -18,7 +19,9 @@ def home(request):
         dur = request.POST.get('dur')
         cmd ='powershell -command '+command 
         result=celery_run.delay(cmd,rep,dur)
-        context = {'output':result}
+        res = AsyncResult(result.id)
+        r = res.get()
+        context = {'output':r}
         return render(request,'home.html',context)       
     return render(request,'home.html')
 
