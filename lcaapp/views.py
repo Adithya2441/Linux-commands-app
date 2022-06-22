@@ -2,6 +2,7 @@ from celery.result import AsyncResult
 import time,subprocess
 from .tasks import celery_run
 from django.shortcuts import render
+from .models import out
 
 def home(request):
     if 'mainform' in request.POST:
@@ -31,4 +32,7 @@ def runcommand(cmd,rep,dur):
         time.sleep(int(dur))
         p=subprocess.run(cmd,capture_output=True,text=True,shell=True)
         output += p.stdout
+        out1 = out()
+        out1.result = output
+        out1.save()
     return output

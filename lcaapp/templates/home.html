@@ -44,8 +44,15 @@
         </div>
         <div>
             Output<br>
-            <textarea class='input' style='height:300px;width:250px'>{{output}}</textarea>
+            <textarea class='input' id='output' style='height:300px;width:250px'>{{output}}</textarea>
         </div>  
     </form>
+    <script>
+        socket = new WebSocket("ws://localhost:8000/");
+        socket.onmessage = function(e) {
+            var data = JSON.parse(e.data);
+            document.querySelector('#output').innerText = data.output;    
+        }
+    </script>
 </body>
 </html>
