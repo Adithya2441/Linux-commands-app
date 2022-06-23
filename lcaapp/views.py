@@ -34,5 +34,7 @@ def runcommand(cmd,rep,dur):
         output += p.stdout
         out1 = out()
         out1.result = output
+        out1.rep = rep
+        out1.dur = dur
         out1.save()
     return output

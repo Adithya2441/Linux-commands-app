@@ -8,7 +8,11 @@ from django.core import serializers
 class ws_consumer(WebsocketConsumer):
     def connect(self):
         self.accept()
-        while(True):
+        r = out.objects.latest('id')
+        serialized_obj = 0
+        for i in range(r.rep):
             res = out.objects.latest('id')
             serialized_obj = serializers.serialize('json',[res])
             self.send(json.dumps({'output':serialized_obj}))
+
+        
