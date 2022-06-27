@@ -13,6 +13,5 @@ class ws_consumer(WebsocketConsumer):
         for i in range(r.rep):
             res = out.objects.latest('id')
             serialized_obj = serializers.serialize('json',[res])
-            self.send(json.dumps({'output':serialized_obj}))
-
+            self.send(json.dumps({'output':serialized_obj[36:]}))
         
